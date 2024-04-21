@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -14,7 +15,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.rcube.suduku.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity(), GridGroup.TextViewClickListener {
+class MainActivity : AppCompatActivity(), GridGroup.OnNumberSelectedListener {
 
     private lateinit var binding: ActivityMainBinding
     private var selectedNumber: String? = null
@@ -53,7 +54,7 @@ class MainActivity : AppCompatActivity(), GridGroup.TextViewClickListener {
             view.setTextColor(binding.root.context.getColor(R.color.white))
             view.background = binding.root.context.getDrawable(R.drawable.rounded_button_pressed)
 
-            Toast.makeText(this, "$selectedNumber selected", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "$selectedNumber selected", Toast.LENGTH_SHORT).show()
         }
         
         if(view is ImageButton) {
@@ -66,7 +67,7 @@ class MainActivity : AppCompatActivity(), GridGroup.TextViewClickListener {
             drawable.setTintList(ColorStateList.valueOf(Color.WHITE))
             view.background = binding.root.context.getDrawable(R.drawable.rounded_button_pressed)
 
-            Toast.makeText(this, "Delete option selected", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "Delete option selected", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -85,7 +86,9 @@ class MainActivity : AppCompatActivity(), GridGroup.TextViewClickListener {
         }
     }
 
-    override fun onTextViewClicked() {
-        Toast.makeText(this, "TextView Clicked", Toast.LENGTH_SHORT).show()
+    override fun onNumberSelected(textView: TextView) {
+        if(selectedNumber != null) {
+            textView.text = selectedNumber.toString()
+        }
     }
 }

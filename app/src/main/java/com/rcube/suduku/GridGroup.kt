@@ -6,14 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import com.rcube.suduku.databinding.FragmentGridGroupBinding
 
 class GridGroup : Fragment() {
 
     private lateinit var binding: FragmentGridGroupBinding
-    private var textViewClickListener: TextViewClickListener? = null
-    private var selectedNumber: String? = null
+    private var callback: OnNumberSelectedListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,8 +25,6 @@ class GridGroup : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentGridGroupBinding.inflate(inflater, container, false)
-
-
         return binding.root
     }
 
@@ -40,15 +38,25 @@ class GridGroup : Fragment() {
 
         textViews.forEach { textView ->
             textView.setOnClickListener {
-                textViewClickListener?.onTextViewClicked()
+                callback?.onNumberSelected(textView)
             }
         }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = context as? OnNumberSelectedListener
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback = null;
     }
 
     /**
      * This interface will provide a method for the fragment to notify the activity when the text view is clicked.
      */
-    interface TextViewClickListener {
-        fun onTextViewClicked()
+    interface OnNumberSelectedListener {
+        fun onNumberSelected(textView: TextView)
     }
 }

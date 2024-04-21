@@ -12,6 +12,7 @@ tools:context=".GridGroup">
             android:background="@drawable/primary_cell"
             android:padding="2dp"
             android:tag="1"
+            android:text="1"
             android:clickable="true"
             style="@style/TableCell"
             />
