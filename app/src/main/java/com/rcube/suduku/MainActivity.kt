@@ -14,7 +14,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.rcube.suduku.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), GridGroup.TextViewClickListener {
 
     private lateinit var binding: ActivityMainBinding
     private var selectedNumber: String? = null
@@ -83,5 +83,9 @@ class MainActivity : AppCompatActivity() {
             }
             selectedButton = null
         }
+    }
+
+    override fun onTextViewClicked() {
+        Toast.makeText(this, "TextView Clicked", Toast.LENGTH_SHORT).show()
     }
 }

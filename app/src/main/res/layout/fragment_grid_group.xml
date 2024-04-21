@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".GridGroup">
+
+    <TableRow>
+
+        <TextView
+            android:id="@+id/textView1"
+            android:background="@drawable/primary_cell"
+            android:padding="2dp"
+            android:tag="1"
+            android:clickable="true"
+            style="@style/TableCell"
+            />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:background="@drawable/primary_cell"
+            android:padding="2dp"
+            android:tag="2"
+            android:clickable="true"
+            style="@style/TableCell"
+            />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:background="@drawable/primary_cell"
+            android:padding="2dp"
+            android:tag="3"
+            android:clickable="true"
+            style="@style/TableCell"
+            />
+
+    </TableRow>
+
+    <TableRow>
+        <TextView
+            android:id="@+id/textView4"
+            android:background="@drawable/primary_cell"
+            android:padding="2dp"
+            android:tag="4"
+            style="@style/TableCell"
+            />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:background="@drawable/primary_cell"
+            android:padding="2dp"
+            android:tag="5"
+            style="@style/TableCell"
+            />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:background="@drawable/primary_cell"
+            android:padding="2dp"
+            android:tag="6"
+            style="@style/TableCell"
+            />
+    </TableRow>
+
+    <TableRow>
+        <TextView
+            android:id="@+id/textView7"
+            android:background="@drawable/primary_cell"
+            android:padding="2dp"
+            android:tag="7"
+            style="@style/TableCell"
+            />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:background="@drawable/primary_cell"
+            android:padding="2dp"
+            android:tag="8"
+            style="@style/TableCell"
+            />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:background="@drawable/primary_cell"
+            android:padding="2dp"
+            android:tag="9"
+            style="@style/TableCell"
+            />
+    </TableRow>
+
+</TableLayout>
