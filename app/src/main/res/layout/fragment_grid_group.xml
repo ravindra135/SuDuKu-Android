@@ -12,7 +12,6 @@ tools:context=".GridGroup">
             android:background="@drawable/primary_cell"
             android:padding="2dp"
             android:tag="1"
-            android:text="1"
             android:clickable="true"
             style="@style/TableCell"
             />
@@ -43,6 +42,7 @@ tools:context=".GridGroup">
             android:background="@drawable/primary_cell"
             android:padding="2dp"
             android:tag="4"
+            android:clickable="true"
             style="@style/TableCell"
             />
 
@@ -51,6 +51,7 @@ tools:context=".GridGroup">
             android:background="@drawable/primary_cell"
             android:padding="2dp"
             android:tag="5"
+            android:clickable="true"
             style="@style/TableCell"
             />
 
@@ -59,6 +60,7 @@ tools:context=".GridGroup">
             android:background="@drawable/primary_cell"
             android:padding="2dp"
             android:tag="6"
+            android:clickable="true"
             style="@style/TableCell"
             />
     </TableRow>
@@ -68,6 +70,7 @@ tools:context=".GridGroup">
             android:id="@+id/textView7"
             android:background="@drawable/primary_cell"
             android:padding="2dp"
+            android:clickable="true"
             android:tag="7"
             style="@style/TableCell"
             />
@@ -76,6 +79,7 @@ tools:context=".GridGroup">
             android:id="@+id/textView8"
             android:background="@drawable/primary_cell"
             android:padding="2dp"
+            android:clickable="true"
             android:tag="8"
             style="@style/TableCell"
             />
@@ -84,6 +88,7 @@ tools:context=".GridGroup">
             android:id="@+id/textView9"
             android:background="@drawable/primary_cell"
             android:padding="2dp"
+            android:clickable="true"
             android:tag="9"
             style="@style/TableCell"
             />
