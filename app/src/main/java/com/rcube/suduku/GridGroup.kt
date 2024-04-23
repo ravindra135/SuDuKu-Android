@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import com.rcube.suduku.databinding.FragmentGridGroupBinding
+import org.json.JSONArray
 
 class GridGroup : Fragment() {
 
@@ -26,6 +27,7 @@ class GridGroup : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentGridGroupBinding.inflate(inflater, container, false)
         return binding.root
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -51,6 +53,17 @@ class GridGroup : Fragment() {
     override fun onDetach() {
         super.onDetach()
         callback = null;
+    }
+
+    fun updateTextView(data: JSONArray) {
+        val textViews = listOf(binding.textView1,binding.textView2,binding.textView3,binding.textView4,binding.textView5,binding.textView6,binding.textView7,binding.textView8,binding.textView9)
+
+        for (i in 0 until 9) {
+            if(data[i] != 0) {
+                textViews[i].text = data[i].toString()
+                textViews[i].isClickable = false
+            }
+        }
     }
 
     /**

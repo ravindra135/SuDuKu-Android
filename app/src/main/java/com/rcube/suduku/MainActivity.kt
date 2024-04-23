@@ -15,12 +15,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.FragmentManager
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.rcube.suduku.databinding.ActivityMainBinding
+import com.rcube.suduku.databinding.FragmentGridGroupBinding
 
 class MainActivity : AppCompatActivity(), GridGroup.OnNumberSelectedListener {
 
@@ -56,48 +58,14 @@ class MainActivity : AppCompatActivity(), GridGroup.OnNumberSelectedListener {
 
                 val grid = Array(9) { IntArray(9) }
 
-                for (i in 0 until 9) {
-                    val row = gridValue.getJSONArray(i)
-                    for (j in 0 until 9) {
-                        grid[i][j] = row.getInt(j)
-                    }
-                }
                 for(i in 0 until 9) {
-                    val fragment = when (i) {
-                        0 -> binding.grid1
-                        1 -> binding.grid2
-                        2 -> binding.grid3
-                        3 -> binding.grid4
-                        4 -> binding.grid5
-                        5 -> binding.grid6
-                        6 -> binding.grid7
-                        7 -> binding.grid8
-                        8 -> binding.grid9
-                        else -> throw RuntimeException("Invalid fragment index")
-                    }
-
-                    val textView = when (i) { // Need to debug here;
-                        0 -> fragment.binding.textView1
-                        1 -> fragment.binding.textView2
-                        2 -> fragment.binding.textView3
-                        3 -> fragment.binding.textView4
-                        4 -> fragment.binding.textView5
-                        5 -> fragment.binding.textView6
-                        6 -> fragment.binding.textView7
-                        7 -> fragment.binding.textView8
-                        8 -> fragment.binding.textView9
-                        else -> throw RuntimeException("Invalid textView index")
-                    }
-
-                    val value = grid[i / 3][i % 3]
-                    if (value == 0) {
-                        textView.text = "" // leave blank for user input
-                    } else {
-                        textView.text = value.toString()
+                    val row = gridValue.getJSONArray(i)
+                    val fragmentInstance = supportFragmentManager.findFragmentByTag("${i + 1}")
+                    if(fragmentInstance is GridGroup) {
+                        fragmentInstance.updateTextView(row)
                     }
                 }
-
-
+                
                 Toast.makeText(this, "Game Started", Toast.LENGTH_SHORT).show()
 
             },
