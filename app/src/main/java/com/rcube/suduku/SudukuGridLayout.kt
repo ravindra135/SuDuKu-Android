@@ -4,7 +4,9 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
+import android.util.Log
 import android.view.Gravity
+import android.view.MotionEvent
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -19,6 +21,12 @@ class SudokuGridLayout @JvmOverloads constructor(
     private val rows = 9
     private val columns = 9
 
+    private var currCellWidth = 0
+    private var currCellHeight = 0
+
+    private var selectedRow = -1
+    private var selectedCol = -1
+
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
 
@@ -27,6 +35,9 @@ class SudokuGridLayout @JvmOverloads constructor(
 
         val cellWidth = width / columns
         val cellHeight = height / rows
+
+        currCellWidth = cellWidth
+        currCellHeight = cellHeight
 
         for (i in 0 until rows) {
             for (j in 0 until columns) {
@@ -39,6 +50,7 @@ class SudokuGridLayout @JvmOverloads constructor(
 
                 textView.setTextAppearance(R.style.TableCell)
                 textView.gravity = Gravity.CENTER
+
                 addView(textView, params)
 
 //                Add cellBorder
@@ -69,5 +81,33 @@ class SudokuGridLayout @JvmOverloads constructor(
                 }
             }
         }
+    }
+
+    private fun fillCells() { // TODO
+        if(selectedCol == -1 || selectedRow == -1) return
+
+        val cell = getChildAt(selectedRow * columns + selectedCol) as TextView
+        cell.setBackgroundColor(Color.parseColor("#B62633"))
+    }
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        return when (event?.action) {
+            MotionEvent.ACTION_DOWN -> {
+                handleTouchEvent(event.x, event.y)
+                true
+            }
+            else -> false
+        }
+    }
+
+    // Handle Touch Event
+    private fun handleTouchEvent(x: Float, y: Float) {
+        val row = (y / currCellWidth).toInt()
+        val col = (x / currCellHeight).toInt()
+
+        selectedCol = col
+        selectedRow = row
+
+        Log.d("SuDuKU", "Row: $row, Col: $col")
     }
 }
