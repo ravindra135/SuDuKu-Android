@@ -27,6 +27,8 @@ class SudokuGridLayout @JvmOverloads constructor(
     private var selectedRow = -1
     private var selectedCol = -1
 
+    private var selectedText: Int? = null;
+
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
 
@@ -50,7 +52,7 @@ class SudokuGridLayout @JvmOverloads constructor(
 
                 textView.setTextAppearance(R.style.TableCell)
                 textView.gravity = Gravity.CENTER
-
+                textView.tag = "$i$j"
                 addView(textView, params)
 
 //                Add cellBorder
@@ -108,6 +110,16 @@ class SudokuGridLayout @JvmOverloads constructor(
         selectedCol = col
         selectedRow = row
 
+        val textView = findViewWithTag<TextView>("$row$col")
         Log.d("SuDuKU", "Row: $row, Col: $col")
+
+        if (textView!= null) {
+            (context as? OnCellTouch)?.updateTextView(textView)
+        }
     }
+
+    interface OnCellTouch {
+        fun updateTextView(textView: TextView)
+    }
+
 }

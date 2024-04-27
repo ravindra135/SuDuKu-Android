@@ -21,11 +21,13 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.rcube.suduku.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), SudokuGridLayout.OnCellTouch {
 
     private lateinit var binding: ActivityMainBinding
     private var selectedNumber: String? = null
     private var selectedButton: View? = null
+
+    private lateinit var SudukuGridLayout: SudokuGridLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -136,6 +138,12 @@ class MainActivity : AppCompatActivity() {
         }
         fun <T> addToRequestQueue(req: Request<T>) {
             requestQueue.add(req)
+        }
+    }
+
+    override fun updateTextView(textView: TextView) {
+        if(selectedNumber != null) {
+            textView.text = selectedNumber
         }
     }
 }
