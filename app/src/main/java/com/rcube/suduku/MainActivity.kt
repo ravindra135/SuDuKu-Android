@@ -15,16 +15,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.FragmentManager
 import com.android.volley.Request
 import com.android.volley.RequestQueue
-import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.rcube.suduku.databinding.ActivityMainBinding
-import com.rcube.suduku.databinding.FragmentGridGroupBinding
 
-class MainActivity : AppCompatActivity(), GridGroup.OnNumberSelectedListener {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private var selectedNumber: String? = null
@@ -60,17 +57,15 @@ class MainActivity : AppCompatActivity(), GridGroup.OnNumberSelectedListener {
 
                 for(i in 0 until 9) {
                     val row = gridValue.getJSONArray(i)
-                    val fragmentInstance = supportFragmentManager.findFragmentByTag("${i + 1}")
-                    if(fragmentInstance is GridGroup) {
-                        fragmentInstance.updateTextView(row)
-                    }
                 }
-                
+
+                Log.i("SuDuKu", "Game Started");
+                Log.i("SuDuKu", "Game Data: $grid")
                 Toast.makeText(this, "Game Started", Toast.LENGTH_SHORT).show()
 
             },
             { error ->
-                Log.e("suduku", "Error: $error")
+                Log.e("SuDuKu", "Error: $error")
                 Toast.makeText(this, "Cant Fetch Game Data", Toast.LENGTH_SHORT).show()
             }
         )
@@ -120,13 +115,6 @@ class MainActivity : AppCompatActivity(), GridGroup.OnNumberSelectedListener {
             selectedButton = null
         }
     }
-
-    override fun onNumberSelected(textView: TextView) {
-        if(selectedNumber != null) {
-            textView.text = selectedNumber.toString()
-        }
-    }
-
 
     // SingleTon
     class MySingleton constructor(context: Context) {
