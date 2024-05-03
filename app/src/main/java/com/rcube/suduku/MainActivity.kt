@@ -54,15 +54,17 @@ class MainActivity : AppCompatActivity(), SudokuGridLayout.OnCellTouch {
             { response ->
 
                 val gridValue = response.getJSONObject("newboard").getJSONArray("grids").getJSONObject(0).getJSONArray("value")
+                val solValue = response.getJSONObject("newboard").getJSONArray("grids").getJSONObject(0).getJSONArray("solution")
 
                 val grid = Array(9) { IntArray(9) }
 
                 for(i in 0 until 9) {
                     val row = gridValue.getJSONArray(i)
-                }
+                    val sol = solValue.getJSONArray(i)
 
-                Log.i("SuDuKu", "Game Started");
-                Log.i("SuDuKu", "Game Data: $grid")
+                    Log.i("SuDuKu", "Value of $i: $row")
+                    Log.i("SuDuKu", "Solution of $i: $sol")
+                }
                 Toast.makeText(this, "Game Started", Toast.LENGTH_SHORT).show()
 
             },

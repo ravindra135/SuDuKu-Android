@@ -27,8 +27,8 @@ class SudokuGridLayout @JvmOverloads constructor(
     private var selectedRow = -1
     private var selectedCol = -1
 
-    private var selectedText: Int? = null;
-
+    private val textViewMatrix = Array(9) { Array<TextView?>(9) { null } }
+    
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
 
@@ -42,6 +42,11 @@ class SudokuGridLayout @JvmOverloads constructor(
         currCellHeight = cellHeight
 
         for (i in 0 until rows) {
+
+            when (i % 3) {
+                0, 3, 6 -> drawThickLines(i, "row")
+            }
+
             for (j in 0 until columns) {
                 val textView = TextView(context)
                 val params = LayoutParams()
@@ -60,37 +65,40 @@ class SudokuGridLayout @JvmOverloads constructor(
                 cellBorder.setStroke(1, Color.parseColor("#CCCCCC"))
                 textView.background = cellBorder
 
-//                Draw Thick Lines;
-                if (i == 2 || i == 5) {
-                    val lineView = View(context)
-                    lineView.setBackgroundColor(Color.BLACK)
-                    val lineParams = LayoutParams()
-                    lineParams.width = cellWidth * 9
-                    lineParams.height = 6
-                    lineParams.rowSpec = spec(i + 1, 1)
-                    lineParams.columnSpec = spec(0, 9)
-                    addView(lineView, lineParams)
-                }
-                if (j == 2 || j == 5) {
-                    val lineView = View(context)
-                    lineView.setBackgroundColor(Color.BLACK)
-                    val lineParams = LayoutParams()
-                    lineParams.width = 6
-                    lineParams.height = cellWidth * 9
-                    lineParams.rowSpec = spec(0, 9)
-                    lineParams.columnSpec = spec(j + 1, 1)
-                    addView(lineView, lineParams)
-                }
+                textViewMatrix[i][j] = textView
+            }
+        }
+
+        for (j in 0 until columns) {
+
+            when (j % 3) {
+                0, 3, 6 -> drawThickLines(j, "col")
             }
         }
     }
 
-    private fun fillCells() { // TODO
-        if(selectedCol == -1 || selectedRow == -1) return
+    private fun drawThickLines(num: Int, type: String) {
+        if (num != 0) {
+            val lineView = View(context)
+            lineView.setBackgroundColor(Color.BLACK)
+            val lineParams = LayoutParams()
 
-        val cell = getChildAt(selectedRow * columns + selectedCol) as TextView
-        cell.setBackgroundColor(Color.parseColor("#B62633"))
+            if (type == "row") {
+                lineParams.width = currCellWidth * 9
+                lineParams.height = 6
+                lineParams.rowSpec = spec(num, 1)
+                lineParams.columnSpec = spec(0, 9)
+            } else {
+                lineParams.height = currCellWidth * 9
+                lineParams.width = 6
+                lineParams.rowSpec = spec(0, 9)
+                lineParams.columnSpec = spec(num, 1)
+            }
+
+            addView(lineView, lineParams)
+        }
     }
+
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         return when (event?.action) {
@@ -110,12 +118,27 @@ class SudokuGridLayout @JvmOverloads constructor(
         selectedCol = col
         selectedRow = row
 
-        val textView = findViewWithTag<TextView>("$row$col")
         Log.d("SuDuKU", "Row: $row, Col: $col")
 
-        if (textView!= null) {
-            (context as? OnCellTouch)?.updateTextView(textView)
-        }
+        val textView = textViewMatrix[row][col] as TextView
+//        if (textView!= null) {
+//            Log.d("SuDuKU", "Before update: ${textView.text}")
+//            (context as? OnCellTouch)?.updateTextView(textView)
+//            textView.invalidate()
+//            Log.d("SuDuKU", "After update: ${textView.text}")
+//
+//        }
+
+        textView.text = "";
+        textView.invalidate()
+        val randomNumber = (1..9).random()
+        textView.text = randomNumber.toString()
+
+//        val textView = findViewWithTag<TextView>("$row$col")
+//        if (textView!= null) {
+//                textView.setBackgroundColor(Color.parseColor("#ecd4ee"))
+////            (context as? OnCellTouch)?.updateTextView(textView)
+//        }
     }
 
     interface OnCellTouch {
