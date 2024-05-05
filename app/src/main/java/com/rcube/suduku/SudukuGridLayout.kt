@@ -24,6 +24,8 @@ class SudukuGridLayout @JvmOverloads constructor(
 
     private val textViewMatrix: Array<Array<TextView?>> = Array(gameSize) { Array<TextView?>(gameSize) { null } }
 
+    private var selectedCell: TextView? = null
+
     @SuppressLint("DrawAllocation")
     override fun onMeasure(widthSpec: Int, heightSpec: Int) {
         super.onMeasure(widthSpec, heightSpec)
@@ -52,7 +54,7 @@ class SudukuGridLayout @JvmOverloads constructor(
                 textView.gravity = Gravity.CENTER
                 textView.tag = "$i$j"
                 textView.background = cellBorder
-                textView.setOnClickListener { setCellText(it) }
+                textView.setOnClickListener { selectCell(it) }
 
                 this.textViewMatrix[i][j] = textView
                 addView(textView, params)
@@ -88,6 +90,7 @@ class SudukuGridLayout @JvmOverloads constructor(
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         return when(event?.action) {
             MotionEvent.ACTION_DOWN -> {
@@ -102,12 +105,31 @@ class SudukuGridLayout @JvmOverloads constructor(
         val col = (x / cellSize).toInt()
 
         textViewMatrix[row][col]?.callOnClick()
-        Log.d("SuDuKu_Game", "Row: $row, Col: $col")
     }
 
-    fun setCellText(view: View) {
+    private fun selectCell(view: View) {
+        toggleCellState()
+
         val textView = view as TextView
-        val randomNumber = (1..9).random()
-        textView.text = randomNumber.toString()
+        textView.setTextAppearance(R.style.SelectedCell)
+
+        val selectCell = GradientDrawable()
+        selectCell.setColor(Color.parseColor("#D7BBE8"))
+        textView.background = selectCell
+        selectedCell = textView
+
+//         val randomNumber = (1..9).random()
+//         textView.text = randomNumber.toString()
+    }
+
+    private fun toggleCellState() {
+        if(selectedCell != null) {
+            val cellBorder = GradientDrawable()
+            cellBorder.setStroke(1, Color.parseColor("#CCCCCC"))
+
+            val oldTextView = selectedCell as TextView
+            oldTextView.background = cellBorder
+            selectedCell = null
+        }
     }
 }

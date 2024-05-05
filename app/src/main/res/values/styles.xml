@@ -13,6 +13,19 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <!-- Selected Cell -->
+    <style name="SelectedCell">
+        <item name="android:background">@drawable/selected_cell</item>
+        <item name="android:layout_columnWeight">1</item>
+        <item name="android:layout_rowWeight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">6dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
     <style name="FrameLayoutCell">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">42dp</item>
