@@ -5,19 +5,17 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
-import android.util.Log
 import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
 import android.widget.TextView
-import android.widget.Toast
 import androidx.gridlayout.widget.GridLayout
 
 class SudukuGridLayout @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyle: Int = 0
-) : GridLayout(context, attrs, defStyle) {
+) : GridLayout(context, attrs, defStyle), UpdateCell {
 
     private val gameSize = 9
     private var cellSize = 0F
@@ -130,6 +128,13 @@ class SudukuGridLayout @JvmOverloads constructor(
             val oldTextView = selectedCell as TextView
             oldTextView.background = cellBorder
             selectedCell = null
+        }
+    }
+
+    override fun updateCellText(num: String) {
+        if(selectedCell != null) {
+            val textView = selectedCell as TextView
+            textView.text = num
         }
     }
 }

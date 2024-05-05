@@ -12,13 +12,15 @@ import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var sudukuGridLayout: SudukuGridLayout
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        enableEdgeToEdge()
-
         val mainLayout = findViewById<View>(R.id.main)
+        sudukuGridLayout = findViewById(R.id.suduku_grid)
+        enableEdgeToEdge()
         ViewCompat.setOnApplyWindowInsetsListener(mainLayout) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -32,10 +34,13 @@ class MainActivity : AppCompatActivity() {
     // Button Clicked
     fun actionBtnClicked(view: View) {
         // need to set button text to view here;
-        if (view is Button) {
-            Toast.makeText(this, "${view.text} selected", Toast.LENGTH_SHORT).show()
-        } else { // image button
-            Toast.makeText(this, "Empty Cell selected", Toast.LENGTH_SHORT).show()
+        when (view) {
+            is Button -> sudukuGridLayout.updateCellText(view.text.toString())
+            else -> sudukuGridLayout.updateCellText("")
         }
     }
+}
+
+interface UpdateCell {
+    fun updateCellText(num: String)
 }
