@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
+import android.util.Log
 import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
@@ -136,5 +137,10 @@ class SudukuGridLayout @JvmOverloads constructor(
             val textView = selectedCell as TextView
             textView.text = num
         }
+    }
+
+    override fun updateGameData(data: Array<IntArray>)
+    {
+        Log.i("SuDuKu_Game", data.joinToString("\n"))
     }
 }
