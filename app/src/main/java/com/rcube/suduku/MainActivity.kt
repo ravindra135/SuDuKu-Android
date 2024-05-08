@@ -63,10 +63,9 @@ class MainActivity : AppCompatActivity() {
                         newPuzzule[i][j] = row.getInt(j)
                         newSolution[i][j] = sol.getInt(j)
                     }
-//                    sudukuGridLayout.updateGameData(newPuzzule)
                 }
-                Log.i("SuDuKu_Game", "Puzzule: ${newPuzzule.joinToString(" ")}")
-                Log.i("SuDuKu_Game", "Game Created")
+
+                sudukuGridLayout.updateGameData(newPuzzule)
                 Toast.makeText(this, "Game Created", Toast.LENGTH_SHORT).show()
             },
             {error ->

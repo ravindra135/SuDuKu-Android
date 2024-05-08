@@ -53,7 +53,6 @@ class SudukuGridLayout @JvmOverloads constructor(
                 textView.gravity = Gravity.CENTER
                 textView.tag = "$i$j"
                 textView.background = cellBorder
-                textView.setOnClickListener { selectCell(it) }
 
                 this.textViewMatrix[i][j] = textView
                 addView(textView, params)
@@ -116,9 +115,6 @@ class SudukuGridLayout @JvmOverloads constructor(
         selectCell.setColor(Color.parseColor("#D7BBE8"))
         textView.background = selectCell
         selectedCell = textView
-
-//         val randomNumber = (1..9).random()
-//         textView.text = randomNumber.toString()
     }
 
     private fun toggleCellState() {
@@ -139,8 +135,18 @@ class SudukuGridLayout @JvmOverloads constructor(
         }
     }
 
-    override fun updateGameData(data: Array<IntArray>)
+    override fun updateGameData(array: Array<IntArray>)
     {
-        Log.i("SuDuKu_Game", data.joinToString("\n"))
+        for (i in 0 until gameSize) {
+            for (j in 0 until gameSize) {
+                val textView = textViewMatrix[i][j] as TextView
+                if(array[i][j] != 0) {
+                    textView.text = array[i][j].toString()
+                    textView.isClickable = false
+                } else {
+                    textView.setOnClickListener { selectCell(it) }
+                }
+            }
+        }
     }
 }
