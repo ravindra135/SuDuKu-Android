@@ -35,11 +35,6 @@ class SudukuGridLayout @JvmOverloads constructor(
         cellBorder.setStroke(1, Color.parseColor("#CCCCCC"))
 
         for (i in 0 until gameSize) {
-
-            when (i % 3) {
-                0 -> drawThickLines(i, "row")
-            }
-
             for (j in 0 until gameSize) {
                 val textView = TextView(context)
                 val params = LayoutParams()
@@ -57,7 +52,13 @@ class SudukuGridLayout @JvmOverloads constructor(
                 this.textViewMatrix[i][j] = textView
                 addView(textView, params)
             }
+
+            when (i % 3) {
+                0 -> drawThickLines(i, "row")
+            }
         }
+
+
 
         for (j in 0 until gameSize) {
             when(j % 3) {
@@ -112,7 +113,7 @@ class SudukuGridLayout @JvmOverloads constructor(
         textView.setTextAppearance(R.style.SelectedCell)
 
         val selectCell = GradientDrawable()
-        selectCell.setColor(Color.parseColor("#D7BBE8"))
+        selectCell.setColor(Color.parseColor("#F2D1FD"))
         textView.background = selectCell
         selectedCell = textView
     }
@@ -137,11 +138,17 @@ class SudukuGridLayout @JvmOverloads constructor(
 
     override fun updateGameData(array: Array<IntArray>)
     {
+        val preFillCell = GradientDrawable()
+        preFillCell.setStroke(1, Color.parseColor("#CCCCCC"))
+        preFillCell.setColor(Color.parseColor("#F2D1FD"))
+
         for (i in 0 until gameSize) {
             for (j in 0 until gameSize) {
                 val textView = textViewMatrix[i][j] as TextView
                 if(array[i][j] != 0) {
+                    textView.setTextAppearance(R.style.PreFilledCell)
                     textView.text = array[i][j].toString()
+                    textView.background = preFillCell
                     textView.isClickable = false
                 } else {
                     textView.setOnClickListener { selectCell(it) }
